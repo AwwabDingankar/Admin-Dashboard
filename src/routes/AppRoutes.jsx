@@ -1,7 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Layout from "../components/Layout";
 
-import Overview from "../pages/Overview/dashboard";
+import Overview from "../pages/overview";
 
 export default function AppRoutes() { 
     return (
