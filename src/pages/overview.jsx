@@ -1,21 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Course from "../components/UI/Course";
 import CreateCourse from "../components/UI/CreateCourse";
 import CourseView from "../components/UI/CourseView";
 
 export default function Overview() {
-  const [courses, setCourses] = useState([
-    {
-      id: 1,
-      name: "Qawaid Al-Muslah",
-      days: "1st & 3rd Thursday",
-      time: "After Isha",
-      location: "Masjid Al-Falah Kondhwa",
-      isActive: false,
-    },
-  ]);
+  const [courses, setCourses] = useState(() => {
+    const storedCourses = localStorage.getItem("courses");
+    if (storedCourses) {
+      return JSON.parse(storedCourses);
+    } else {
+      return [
+        {
+          id: 1,
+          name: "Qawaid Al-Muslah",
+          days: "1st & 3rd Thursday",
+          time: "After Isha",
+          location: "Masjid Al-Falah Kondhwa",
+          isActive: false,
+        },
+      ];
+    }
+  });
   const [coursesView, setCoursesView] = useState(false);
   const [currentId, setCurrentId] = useState(null);
+
+  useEffect(() => {
+    localStorage.setItem("courses", JSON.stringify(courses));
+  }, [courses]);
 
   const addCourse = (newCourse) => {
     setCourses((prev) => [...prev, newCourse]);

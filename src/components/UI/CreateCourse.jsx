@@ -1,17 +1,27 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { IoIosAdd } from "react-icons/io";
 import { v4 as uuidv4 } from "uuid";
 
 export default function CreateCourse({ onCreate }) {
-  const [showForm, setShowForm] = useState(false);
-  const [form, setForm] = useState({
+  const INITIAL_STATE = {
     id: "",
     name: "",
     date: "",
     days: "",
     time: "",
     location: "",
-  });
+  };
+  
+  const [showForm, setShowForm] = useState(false);
+  const [form, setForm] = useState(INITIAL_STATE);
+
+  const inputEl = useRef(null);
+
+  useEffect(() => {
+    if (showForm && inputEl.current) {
+      inputEl.current.focus();
+    }
+  }, [showForm]);
 
   const handleChange = (e) =>
     setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -20,16 +30,13 @@ export default function CreateCourse({ onCreate }) {
     e.preventDefault();
     const newArray = { ...form, id: uuidv4() };
     onCreate(newArray);
-    setShowForm(false);
-    setForm({
-      id: "",
-      name: "",
-      date: "",
-      days: "",
-      time: "",
-      location: "",
-    });
+    handleClose();
   };
+
+  const handleClose = () => {
+    setShowForm(false);
+    setForm(INITIAL_STATE);
+  }
 
   return (
     <>
@@ -50,7 +57,7 @@ export default function CreateCourse({ onCreate }) {
             className="relative bg-white p-6 rounded-md shadow-md max-w-lg"
           >
             <button
-              onClick={() => setShowForm(false)}
+              onClick={handleClose}
               className="absolute right-5 top-5 cursor-pointer bg-red-500 hover:bg-red-700 text-white px-2 pb-1  rounded-lg"
             >
               close
@@ -60,6 +67,7 @@ export default function CreateCourse({ onCreate }) {
               Course Name
             </label>
             <input
+              ref={inputEl}
               type="text"
               name="name"
               value={form.name}
