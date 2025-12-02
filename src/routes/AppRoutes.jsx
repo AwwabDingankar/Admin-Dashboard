@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 
 import Students from "../pages/students";
 import Overview from "../pages/overview";
+import Reports from "../pages/reports";
 
 export default function AppRoutes() {
   return (
@@ -10,7 +11,7 @@ export default function AppRoutes() {
       <Route path="/" element={<Layout />}>
         <Route index element={<Overview />} />
         <Route path="students" element={<Students />} />
-        {/* TODO- add students & reports route */}
+        <Route path="reports" element={<Reports />}/>
       </Route>
     </Routes>
   );

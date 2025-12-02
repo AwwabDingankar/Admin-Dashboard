@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Course from "../components/UI/Course";
-import CreateCourse from "../components/UI/CreateCourse";
-import CourseView from "../components/UI/CourseView";
+import useLocalStorage from "../hooks/useLocalStorage";
+
+import Course from "../components/overview/Course";
+import CreateCourse from "../components/overview/CreateCourse";
+import CourseView from "../components/overview/CourseView";
 
 export default function Overview() {
-  const [courses, setCourses] = useState(() => {
-    const storedCourses = localStorage.getItem("courses");
-    if (storedCourses) {
-      return JSON.parse(storedCourses);
-    } else {
-      return [
+  const [courses, setCourses] = useLocalStorage("courses", [
         {
           id: 1,
           name: "Qawaid Al-Muslah",
@@ -18,15 +15,10 @@ export default function Overview() {
           location: "Masjid Al-Falah Kondhwa",
           isActive: false,
         },
-      ];
-    }
-  });
+      ]);
+
   const [coursesView, setCoursesView] = useState(false);
   const [currentId, setCurrentId] = useState(null);
-
-  useEffect(() => {
-    localStorage.setItem("courses", JSON.stringify(courses));
-  }, [courses]);
 
   const addCourse = (newCourse) => {
     setCourses((prev) => [...prev, newCourse]);

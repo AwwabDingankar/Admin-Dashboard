@@ -75,7 +75,7 @@ export default function CourseView({ onClose, onDelete, course, onToggle }) {
               </tr>
               <tr>
                 <td className="border border-gray-300 p-2">Hussain Nore</td>
-                <td className="border border-gray-300 p-2">10%</td>
+                <td className="border border-gray-300 p-2">100%</td>
               </tr>
             </tbody>
           </table>
