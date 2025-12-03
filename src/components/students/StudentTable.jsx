@@ -1,21 +1,60 @@
-import React, {useState} from "react";
-import { FaSearch } from 'react-icons/fa';
+import React, { useState } from "react";
+import { FaSearch } from "react-icons/fa";
 import student from "../../data/students.json";
 
 export default function StudentsTable() {
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const filteredStudents = student.filter((s) => (
-    s.name.toLowerCase().includes(search.toLowerCase()) || s.gender.toLowerCase().includes(search.toLowerCase()) || s.area.toLowerCase().includes(search.toLowerCase()) || s.id.toString().includes(search.toString())
-  ));
+  const filteredStudents = student.filter(
+    (s) =>
+      s.name.toLowerCase().includes(search.toLowerCase()) ||
+      s.gender.toLowerCase().includes(search.toLowerCase()) ||
+      s.area.toLowerCase().includes(search.toLowerCase()) ||
+      s.id.toString().includes(search.toString()) ||
+      s.gender.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const itemsPerPage = 10;
+
+  const totalPages = Math.ceil(filteredStudents.length / itemsPerPage);
+
+  const startIndex = (currentPage - 1) * itemsPerPage;
+
+  const currentStudents = filteredStudents.slice(
+    startIndex,
+    startIndex + itemsPerPage
+  );
+
+  const goToPage = (page) => {
+    if (page > 0 && page <= totalPages) {
+      setCurrentPage(page);
+    }
+  };
 
   return (
     <>
       <div className="flex justify-between">
-        <div className="text-2xl font-semibold"><h1>Registered Students</h1></div>
+        {console.log(totalPages)}
+        <div className="text-2xl font-semibold">
+          <h1>Registered Students</h1>
+        </div>
         <div className="flex text-gray-600 relative">
-          {search ?  "" : <FaSearch className="top-2 left-2 absolute" size={18}/>}
-          <input type="text" value={search} onChange={(e) => setSearch(e.target.value)} className="border px-1.5 py-1 rounded mb-1" placeholder="     search..." />
+          {search ? (
+            ""
+          ) : (
+            <FaSearch className="top-2 left-2 absolute" size={18} />
+          )}
+          <input
+            type="text"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
+            className="border px-1.5 py-1 rounded mb-1"
+            placeholder="     search..."
+          />
         </div>
       </div>
       <table className="border border-gray-400 w-full text-left bg-white ">
@@ -31,7 +70,7 @@ export default function StudentsTable() {
         </thead>
 
         <tbody>
-          {filteredStudents.map((s) => (
+          {currentStudents.map((s) => (
             <tr key={s.id} className="hover:bg-gray-200 hover:cursor-pointer">
               <td className="border px-3 py-2">{s.id}</td>
               <td className="border px-3 py-2">{s.name}</td>
@@ -43,6 +82,38 @@ export default function StudentsTable() {
           ))}
         </tbody>
       </table>
+
+      <div className="flex justify-center items-center gap-2 mt-4">
+        <button
+          className="px-3 py-1 border rounded disabled:opacity-50 cursor-pointer hover:bg-gray-800 hover:text-white"
+          disabled={currentPage === 1}
+          onClick={() => goToPage(currentPage - 1)}
+        >
+          Previous
+        </button>
+
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index}
+            className={`${
+              currentPage === index + 1 ? "bg-gray-800 text-white" : ""
+            } px-3 py-1 border rounded disabled:opacity-50`}
+            onClick={() => goToPage(index + 1)}
+          >
+            {index + 1}
+          </button>
+        ))}
+
+        <button
+          onClick={() => {
+            goToPage(currentPage + 1);
+          }}
+          className="px-3 py-1 border rounded cursor-pointer disabled:opacity-50 hover:bg-gray-800 hover:text-white"
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </button>
+      </div>
     </>
   );
 }
