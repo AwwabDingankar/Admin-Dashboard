@@ -10,11 +10,11 @@ export default function Course({ data , onSelect}) {
       className="bg-white p-4 rounded-md shadow-md hover:bg-gray-200  cursor-pointer"
     >
       <h2 className="text-lg text-center font-bold">{data.name}</h2>
-      <div className="flex flex-col items-center justify-center m-10 rounded-md shadow-md ">
+      <div className="flex flex-col font-mono items-center justify-center m-10 rounded-md shadow-md ">
         <p>{data.days}</p>
         <p>{data.time}</p>
       </div>
-      <div className="flex justify-center">
+      <div className="flex justify-center font-medium">
         <p>
           Status:{" "}
           <span className={data.isActive ? "text-green-500" : "text-red-500"}>
