@@ -43,7 +43,7 @@ export default function CreateCourse({ onCreate }) {
       {!showForm ? (
         <div
           onClick={() => setShowForm(true)}
-          className="flex items-center justify-center bg-white rounded-md shadow-md hover:bg-gray-200 min-h-53 cursor-pointer"
+          className="flex items-center justify-center bg-white rounded-xl shadow-md hover:bg-gray-200 min-h-53 cursor-pointer"
         >
           <button className="flex flex-col items-center cursor-pointer ">
             <IoIosAdd size={40} />

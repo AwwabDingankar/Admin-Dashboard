@@ -6,22 +6,23 @@ export default function Course({ data , onSelect}) {
 
   return (
     <div
-      onClick={onSelect}
-      className="bg-white p-4 rounded-md shadow-md hover:bg-gray-200  cursor-pointer"
+  onClick={onSelect}
+  className="bg-white rounded-xl  shadow-md hover:shadow-lg hover:border-gray-300 transition cursor-pointer"
+>
+  <div className="flex justify-between items-center p-4">
+    <h2 className="text-lg font-bold">{data.name}</h2>
+
+    <span
+      className={`px-3 py-1 text-xs rounded-full ${
+        data.isActive
+          ? "bg-green-100 text-green-600"
+          : "bg-red-100 text-red-600"
+      }`}
     >
-      <h2 className="text-lg text-center font-bold">{data.name}</h2>
-      <div className="flex flex-col font-mono items-center justify-center m-10 rounded-md shadow-md ">
-        <p>{data.days}</p>
-        <p>{data.time}</p>
-      </div>
-      <div className="flex justify-center font-medium">
-        <p>
-          Status:{" "}
-          <span className={data.isActive ? "text-green-500" : "text-red-500"}>
-            {data.isActive ? "Active" : "InActive"}
-          </span>
-        </p>
-      </div>
-    </div>
+      {data.isActive ? "Active" : "Inactive"}
+    </span>
+  </div>
+</div>
+
   );
 }

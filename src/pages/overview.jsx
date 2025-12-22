@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
 import Course from "../components/overview/Course";
@@ -46,7 +46,7 @@ export default function Overview() {
 
   return (
     <>
-      <div className=" grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  grid-rows-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  grid-rows-3 gap-4">
         {courses.map((c) => (
           <Course key={c.id} data={c} onSelect={() => openCourseView(c.id)} />
         ))}
